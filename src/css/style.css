@@ -8,6 +8,10 @@ html {
 	font-size: 62.5%;
 }
 
+body {
+	background-color: lightblue;
+}
+
 .container {
 	width: 110rem;
 	margin: 0 auto;
