@@ -15,7 +15,7 @@ class WeeklyView extends View {
 		return `
           <div class="card">
 						<img src="${date.icons}" class="weather-img" />
-            <span>Monday</span>
+            <span>${date.date}</span>
             <span>${date.maxTemp}</span>
 					</div>
     `;

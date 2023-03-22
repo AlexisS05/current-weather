@@ -1,11 +1,10 @@
 import { API_URL } from './helpers.js';
 import { ICON_MAP } from './iconMap.js';
+import { DAY_FORMATTER } from './helpers.js';
 
 export const state = {
 	currentWeather: {},
 	daily: [],
-	icons: [],
-	test: [],
 };
 
 export const loadWeather = async function () {
@@ -24,7 +23,6 @@ export const loadWeather = async function () {
 			precip: Math.round(data.daily.precipitation_sum[0] * 100) / 100,
 			windSpeed: Math.round(data.current_weather.windspeed),
 		};
-		console.log(state.currentWeather);
 	} catch (err) {
 		console.error(err);
 	}
@@ -40,11 +38,10 @@ export const loadDailyWeather = async function () {
 		});
 
 		const { daily } = data;
-		console.log(daily);
-
 		state.daily = daily.map((el) => {
 			return el;
 		});
+		console.log(state.daily);
 	} catch (err) {
 		console.error(err);
 	}
@@ -53,29 +50,11 @@ export const loadDailyWeather = async function () {
 export const parseDailyWeather = function ({ daily }) {
 	return daily.time.map((time, index) => {
 		return {
-			time: time * 1000,
+			date: DAY_FORMATTER.format(time * 1000),
 			icons: getIconUrl(daily.weathercode[index]),
 			maxTemp: Math.round(daily.temperature_2m_max[index]),
 		};
 	});
-};
-
-export const loadDailyData = async function () {
-	try {
-		const res = await fetch(API_URL);
-		const data = await res.json();
-
-		const { daily } = data;
-		console.log(daily);
-
-		state.daily = data.daily.temperature_2m_max.map((el) => {
-			return {
-				maxTemp: Math.round(el),
-			};
-		});
-	} catch (err) {
-		console.error(err);
-	}
 };
 
 export const getIconUrl = function (iconCode) {
