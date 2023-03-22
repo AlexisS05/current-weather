@@ -10,7 +10,7 @@ class CurrentView extends View {
 	_generateMarkup() {
 		return `
 			<div class="cur-weather">
-					<img src="src/img/sun.svg" /> <span>${this._data.temperature}</span>
+					<img src="${this._data.weathercode}" /> <span>${this._data.temperature}</span>
 			</div>
     `;
 	}

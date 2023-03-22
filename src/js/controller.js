@@ -1,30 +1,31 @@
 import * as modal from './modal.js';
 import currentView from './Views/currentView.js';
-import View from './Views/View.js';
 import weatherView from './Views/weatherView.js';
+import weeklyView from './Views/weeklyView.js';
 
-const loadDailyWeather = async function () {
+const loadCurrentWeather = async function () {
 	try {
 		await modal.loadWeather();
 
 		weatherView.render(modal.state.currentWeather);
-	} catch (err) {
-		console.error(err);
-	}
-};
-
-const loadTodayWeather = async function () {
-	try {
-		await modal.loadWeather();
-
 		currentView.render(modal.state.currentWeather);
 	} catch (err) {
 		console.error(err);
 	}
 };
 
+const loadWeeklyWeather = async function () {
+	try {
+		await modal.loadDailyWeather();
+
+		weeklyView.render(modal.state.daily);
+	} catch (err) {
+		console.error(err);
+	}
+};
+
 const init = function () {
-	weatherView.addHandlerRender(loadDailyWeather);
-	currentView.addHandlerToday(loadTodayWeather);
+	weatherView.addHandlerRender(loadCurrentWeather);
+	weeklyView.addHandlerWeekly(loadWeeklyWeather);
 };
 init();
